@@ -1,0 +1,2 @@
+Input:Um tetraedro de N camadas e o peso e disribuição de cada uma das bolas dentro dele. Cada camada S é composta por S linhas de input em padrão triangular (ex:1, 2, 3, ..., S)
+Output:A ordem em que as bolas caem do tetraedro, supondo que as bolas mais pesadas ocupam as posicoes deixadas livres nas camadas inferiores.

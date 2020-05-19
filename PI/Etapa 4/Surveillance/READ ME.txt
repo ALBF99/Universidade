@@ -1,0 +1,7 @@
+A primeira linha do input tem um inteiro que indica o número de vértices do poligono que representa a loja. As seguintes n linhas contêm as coordenadas x, y dos vértices do poligono, listados no sentido dos ponteirso do relógio. Os valores das coordenadas são inteiros separados por um espaço.
+
+3 ≤ n ≤ 50 Número de vértices
+0 ≤ x ≤ 500 x coordenadas de um vértice
+0 ≤ y ≤ 500 y coordenadas de um vértice
+
+O output tem uma única linha com a coordenada correspondente

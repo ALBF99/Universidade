@@ -1,0 +1,8 @@
+	O objetivo desde programa é a partir das comunidades(cidades, vilas e aldeias) de um distrito, a estradas que existem entre essas comunidades, e as duas novas capitais, X e Y, calcular quantas comunidades devem pertencer ao monicipio de X, ao municipio de Y e aquelas que podem escolher entre as duas. Podem haver entre duas a 20 000 comunidades, entre 1 e 150 000 estradas e o comprimento da estrada, entre 1 a 1 000 u.m.. 
+O input comeca com dois inteiros C (Numero de comunidades) e R (Numero de estradas). As comunidades devem ser identificadas por numeros de 0 a C-1. Nas seguintes linhas tres inteiros: c1,c2,l, que correspondem a uma estrada de c1 a c2 com o comprimento de l. Na ultima linha temos as duas novas capitais X e Y.
+O output deve ser um print de tres inteiros: o numero de comunidades que devem pertencer ao monicipio de X, ao municipio de Y e aquelas que podem escolher entre as duas.
+Para isto criamos uma funcao matriz que nao recebe nada e le as linhas que esta no ficheiro input.txt e diviti-as em elementos para a lista a qual demos o nome de matriz, retorna a ultima(line2) e a primeira(line1) linha que sao retiradas da matriz e a lista matriz em que cada elemento corresponde uma linha em string.
+Depois criamos outra funcao to_int que recebe line2, line1 e a matriz e passa cada elementos para inteiros e retorna essas mesmas listas.
+A partir de line2 e lin1, conseguimos retirar C, X, Y.
+Por fim, criamos a funcao estrada que recebe a a matriz mais C, X e Y e calculamos quantas comunidades devem pertencer ao monicipio de X, ao municipio de Y e aquelas que podem escolher entre as duas e por fim, retornamos esses valores.
+No final fizemos apenas um print dos valores
