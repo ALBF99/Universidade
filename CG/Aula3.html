@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Aula 3</title>
+</head>
+<body>
+
+        <h1>Exercício 3</h1>
+        <canvas id='tabuleiro' width="400px" height="400px"></canvas>
+        <script>
+          
+            var ctx = document.getElementById("tabuleiro").getContext("2d");
+
+            function quadrado(x, y, color)
+            {   
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.rect(x, y, 50, 50);
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+            }   
+
+            function main()
+            {   
+
+            var cor = ["blue", "pink", "yellow"];
+            var x = 0;
+            var y = 0;
+            var c = 0;
+            var cx = 0;
+            for(var i = 0 ; i < 64; i++)
+            {
+                quadrado(x,y,cor[(c+cx)%3]);
+                if(c == 7)
+                {
+                    y += 50;
+                    x = 0;
+                    c = 0;
+                    cx += 1;
+                }
+                else{
+                    x +=50;
+                    c++;
+                 }
+        
+            }
+        }
+
+        main();
+        </script>
+        
+    
+</body>
+</html>

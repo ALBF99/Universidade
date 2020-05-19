@@ -1,0 +1,43 @@
+﻿Sistemas Operativos 1 - Trabalho
+
+Modelo de 5 estados
+	-> New-> Ready-> <-Run->Exit
+	       <-Block<-
+	
+
+1, 5, 0		var5= 0;
+2, 5, 7		var5= 1;
+2, 5, 7		var5= 2;
+6, 5, 2 	vai para a proxima linha;   vai para a proxima linha;   salta 2 linhas para a frente
+3, 5, 7		var5= 1;   var5= 0;
+4, 2, 7		salta 2 linhas para tras;   salta 2 linhas para tras 
+
+
+instruções 8 e 9 vamos para o estado Block
+
+"Quando no mesmo instante, um processo vindo do NEW, do BLOCKED, e /ou doRUN querem entrar no READY, o vindo do BLOCKED tem prioridade, seguido dode RUN, e por fim o processo vindo de NEW."
+1ºBlocked
+2ºRun
+3ºNew
+
+"O programa é guardado em memória, representada por um array de inteiros,ficando o PCB (process control block) com a indicação dum PID (process ID); da localização do programa; com o PC (Program Counter); e o estado  do respetivoprograma."
+
+PCB- Estrutura onde vamos guardar a informação toda de um processo: PID, instruções, PC, variáveis, etc...
+n PCB para n Processos
+struct PCB{
+	... PID;
+	... PC;
+	apontador para a var0;
+	apontador para a instrução1(composta por 3 num);
+	etc...(dados auxiliares)
+
+}
+
+
+
+array de instruções e variáveis[];** -> int MEM[]
+**
+|var0|var1|var2|var3|var4|var5|var6|var7|var8|var9|inst0|inst1|inst2|inst3|......
+^						  ^
+|						  |
+endereço  					endereço

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>39872_2D</title>
+
+</head>
+<body> 
+    <svg version="1.1"
+        id="SVGModel"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        width = "1300" height = "900" 
+        style="background-color:white;"
+        >
+       
+        <defs>
+            <!--Grupo "quadrado" -->
+            <g id = "quadrado">
+                <rect x='206' y='182' width='270.5' height='252' fill = "black"/>
+
+            </g>
+
+            <!--Grupo "letra_B"-->
+            <g id = "letra_B">
+                
+                <ellipse cx="345" cy="347.3" rx="51" ry="39"
+                    style="stroke:white;stroke-width:29"/>
+                <ellipse cx="329" cy="268" rx="49" ry="38"
+                    style="stroke:white;stroke-width:29"/>
+            
+                <path stroke= 'white' stroke-width = "34"  d="
+                    M 339 233.2
+                    L 340 233.2
+                    L 293 233.2
+                    L 293 384
+                    L 350 384
+                "/>
+                
+                <line x1="310" y1="306" x2="346" y2="306"
+                    style="stroke:white;stroke-width:33"/>
+                <rect x='310' y='323' width='40' height='49' fill = "black"/>
+                <rect x='310' y='246' width='29.8' height='44' fill = "black"/>
+                <rect x='260' y='240' width='16' height='60' fill='black'/>
+            </g>
+        </defs>
+
+        <!--Primeiro quadrado-->
+        <use xlink:href = "#quadrado"
+          fill = 'black'/>
+        <use xlink:href = "#letra_B"/>
+      
+         <!--Segundo quadrado-->
+         <use xlink:href = "#quadrado"
+         fill = 'black'
+         transform = "translate(311,0)"/>
+         <use xlink:href = "#letra_B"
+         transform = "translate(311,0)"/>
+
+         <!--Terceiro quadrado-->
+         <use xlink:href = "#quadrado"
+         fill = 'black'
+         transform = "translate(622,0)"/>
+            <!--letra C-->
+            <ellipse cx="987" cy="310" rx="95" ry="81"
+                style="stroke: white; stroke-width:30"/>
+            <rect x='1043' y='220' width='54' height='200' fill='black'/>
+        
+
+    </svg>
+</body>
+</html>
