@@ -1,2 +1,0 @@
-# Universidade
-UÉvora - Engenharia Informática
