@@ -1,0 +1,110 @@
+Ana Ferro-39872
+David Tintim-40254
+
+
+5.
+(a)
+select NomeE
+from especie;
+
+(b)
+select distinct Classe
+from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+where NomeT='Manuel';
+
+(c)
+select distinct NCCChefe as NCC
+from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+where Classe='Reptil';
+
+(d)
+select IdComp
+from alojado
+except
+select IdComp
+from alojado natural inner join animal natural inner join especie
+where Classe='Ave';
+
+(e)
+(select IdComp
+from alojado natural inner join animal natural inner join especie
+where Classe='Mamífero')
+intersect
+(select IdComp
+from alojado natural inner join animal natural inner join especie
+where Classe='Reptil');
+
+(f)
+(select NomeT
+from Tratador natural inner join Trata natural inner join compartimento)
+except
+    ((select NomeT
+from Tratador natural inner join Trata natural inner join compartimento
+where Tipo = 'gaiola')
+union
+     (select NomeT
+from Tratador natural inner join Trata natural inner join compartimento
+where Tipo= 'pantano'));
+
+(g)
+select count(*)
+from especie
+where Classe='Mamífero';
+
+(h)
+select IdComp, count(*) as numAnimal
+from Alojado natural inner join Animal natural inner join compartimento
+group by IdComp;
+
+(i)
+select NCC, count(Classe)
+from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+where Classe='Mamífero'
+group by NCC;
+
+(j)
+
+
+(k)
+select NCC
+from (select NCC, count(Classe) as numvezes
+      from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+      where Classe='Mamífero'
+      group by NCC) as t,
+     (select max(t1.numvezes) as l
+        from (select NCC, count(Classe) as numvezes
+              from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+              where Classe='Mamífero'
+              group by NCC) as t1) as t2
+where t.numvezes=t2.l;
+
+(l)
+select idComp
+from (select IdComp, count(Genero) as numfem
+      from  alojado natural inner join animal natural inner join especie
+      where genero='feminino'
+      group by IdComp) as r,
+     (select max(r1.numfem) as s
+        from (select IdComp, count(Genero) as numfem
+              from alojado natural inner join animal natural inner join especie
+              where genero='feminino'
+              group by IdComp) as r1) as r2
+where r.numfem=r2.s;
+
+(m)
+delete from alojado where NomeA in (select NomeA from tratador natural inner join trata natural inner join alojado natural inner join animal natural inner join especie
+where Classe='Reptil');
+
+(n)
+select especie.Classe, IdComp, count(*) as numAnimal
+from Alojado natural inner join Compartimento natural inner join Animal natural inner join especie
+where Classe='Ave'
+group by Classe, IdComp;
+
+(o)
+select sum(Salário)
+from  tratador natural inner join trata natural inner join compartimento natural inner join alojado natural inner join animal natural inner join especie
+where tipo like 'charco' and Classe like 'Reptil';
+
+
+

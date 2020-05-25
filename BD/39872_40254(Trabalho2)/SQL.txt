@@ -1,0 +1,471 @@
+drop table avioes;
+drop table administrativos;
+drop table hospedeiras;
+drop table pilotos;
+drop table comissarios_de_bordo;
+drop table tripulação;
+drop table funcionarios;
+drop table trajeto;
+drop table VoosEfectivos;
+drop table requisitosH;
+drop table requisitosP;
+drop table requisitosC;
+drop table voos;
+
+create table avioes(
+  NomeA varchar(25) primary key,
+  Marca varchar(15),
+  Modelo varchar(15),
+  Autonomia integer,
+  NumLugares integer
+);
+
+create table funcionarios(
+  NomeF varchar(25),
+  NumBI integer primary key,
+  NIF integer,
+  DataNascimento varchar(10)
+);
+
+create table administrativos(
+  NumBI integer primary key,
+  foreign key (NumBI) references funcionarios on delete restrict
+);
+
+create table pilotos(
+  NumBI integer primary key,
+  NumCartaPiloto integer,
+  AnosExpP integer,
+  foreign key (NumBI) references funcionarios on delete restrict
+);
+
+create table hospedeiras(
+  NumBI integer primary key,
+  AltH integer,
+  PesoH integer,
+  AnosExpH integer,
+  foreign key (NumBI) references funcionarios on delete restrict
+);
+
+create table comissarios_de_bordo(
+  NumBI integer primary key,
+  AltC integer,
+  PesoC integer,
+  AnosExpC integer,
+  foreign key (NumBI) references funcionarios on delete restrict
+);
+
+create table voos(
+  NumVoo integer,
+  DiaSemana varchar(7),
+  HoraPartida varchar(5),
+  HoraChegada varchar(5),
+  Origem varchar(20),
+  Destino varchar(20),
+  Kms integer,
+  primary key (NumVoo, DiaSemana)
+);
+
+create table VoosEfectivos(
+  NomeA varchar(25),
+  NumVoo integer,
+  Data varchar(10),
+  DiaSemana varchar(8),
+  HoraExataP varchar(5),
+  HoraExataC varchar(5),
+  Passageiros integer,
+  primary key (NumVoo, Data,DiaSemana),
+  foreign key (NumVoo, DiaSemana) references voos on delete restrict,
+  foreign key (NomeA) references avioes on delete restrict
+);
+
+create table tripulação(
+  NumVoo integer,
+  NumBI integer,
+  DiaSemana varchar(8),
+  Data varchar(10),
+  primary key (NumVoo, NumBI, DiaSemana, Data),
+  foreign key (NumVoo, DiaSemana) references voos(NumVoo, DiaSemana) on delete restrict,
+  foreign key (NumBI) references funcionarios(NumBI) on delete restrict,
+  foreign key (NumVoo, DiaSemana, Data) references VoosEfectivos(NumVoo, DiaSemana, Data) on delete restrict
+);
+
+create table requisitosP(
+  NumVoo integer,
+  NumPilotos integer,
+  NumExpMin integer,
+  DiaSemana varchar(7),
+  primary key (NumVoo,DiaSemana, NumExpMin),
+  foreign key (NumVoo, DiaSemana) references voos(NumVoo, DiaSemana) on delete restrict
+);
+
+create table requisitosC(
+  NumVoo integer,
+  NumComissarios integer,
+  AlturaMin integer,
+  DiaSemana varchar(7),
+  primary key (NumVoo,DiaSemana, AlturaMin),
+  foreign key (NumVoo, DiaSemana) references voos(NumVoo, DiaSemana) on delete restrict
+);
+
+create table requisitosH(
+  NumVoo integer,
+  NumHospedeiras integer,
+  PesoMax integer,
+  DiaSemana varchar(7),
+  primary key (NumVoo,DiaSemana, PesoMax),
+  foreign key (NumVoo, DiaSemana) references voos(NumVoo, DiaSemana) on delete restrict
+);
+create table trajeto(
+  NumVoo integer,
+  NumTrajeto integer,
+  DiaSemana varchar(8),
+  Data varchar(10),
+  primary key (NumVoo, DiaSemana, Data),
+  foreign key (NumVoo,DiaSemana) references voos(NumVoo, DiaSemana)  on delete restrict,
+  foreign key (NumVoo, DiaSemana, Data) references VoosEfectivos(NumVoo, DiaSemana, Data) on delete restrict
+);
+--#9--
+--AVIOES--
+--(a)--
+insert into avioes values('Aleixo Abreu', 'Boeing', 737, 2000, 200 );
+
+--(b)--
+insert into avioes values('Afonso Lopes', 'Boeing',737,2000,200);
+
+--(c)--
+insert into avioes values('Bartolomeu Dias', 'Boeing', 737, 2000, 200);
+
+--(d)--
+insert into avioes values('Diogo Dias', 'Boeing', 777, 8000, 400);
+
+--(e)--
+insert into avioes values('Francisco Zeimoto', 'Boeing', 777, 8000, 400);
+
+--(f)--
+insert into avioes values('Gil Eanes', 'Airbus', 'A318',3000, 150 );
+
+--(g)--
+insert into avioes values('Gomes de Sequeira', 'Airbus', 'A318', 3000, 150);
+
+--(h)--
+insert into avioes values('Gomes Pires', 'Airbus', 'A318', 3000, 150);
+
+--(i)--
+insert into avioes values('Nicolau Coelho','Airbus', 'A380', 1500, 600);
+
+--FUNCIONARIOS--
+--ADMINISTRATIVOS--
+--(a)--
+insert into funcionarios values('André Rio', 1, 741, '07-01-1964');
+insert into funcionarios values('Bernardo Fonseca', 2, 471, '18-12-1963');
+insert into funcionarios values('Álvaro Andrade', 3, 147, '09-09-1966');
+insert into funcionarios values('Julia Carolino', 4, 852, '28-10-1967');
+insert into funcionarios values ('Bruno Fernandes', 5, 582, '19-03-1955');
+insert into funcionarios values('Tiago Jardim', 6, 258, '03-07-1962');
+insert into administrativos values (1);
+insert into administrativos values (2);
+insert into administrativos values (3);
+insert into administrativos values (4);
+insert into administrativos values (5);
+insert into administrativos values (6);
+
+--PILOTOS--
+--(b)--
+insert into funcionarios values ('João Oliveira', 10, 123, '18-02-1970');
+insert into funcionarios values ('Angela Rodrigues', 11, 272, '04-06-1975');
+insert into funcionarios values ('Tiago Sousa', 12, 490, '09-07-1968');
+insert into funcionarios values ('Leonardo Couto', 13, 167, '11-11-1974');
+insert into funcionarios values ('Mariana Gonçalves', 14, 823, '22-06-1969');
+insert into funcionarios values ('Miguel Nunes', 15, 711, '25-10-1971');
+insert into funcionarios values ('Sandra Freire', 16, 209, '26-07-1973');
+insert into funcionarios values ('João Ferreira', 17, 543, '17-01-1976');
+insert into funcionarios values ('Bernardo Carvalho', 18, 561, '15-08-1972');
+insert into funcionarios values ('José Figueiredo', 19, 907, '18-07-1976');
+insert into pilotos values(10, 1, 10);
+insert into pilotos values (11, 2, 10);
+insert into pilotos values (12, 3, 10);
+insert into pilotos values (13, 4, 10);
+insert into pilotos values (14, 5, 7);
+insert into pilotos values (15, 6, 7);
+insert into pilotos values (16, 7, 7);
+insert into pilotos values (17, 8, 7);
+insert into pilotos values (18, 9, 7);
+insert into pilotos values (19, 10, 7);
+
+--HOSPEDEIRAS--
+--(c)--
+insert into funcionarios values ('Raquel Cardoso', 20, 143,'12-04-1982');
+insert into funcionarios values ('Ema Jasmim', 21, 431, '06-11-1988');
+insert into funcionarios values ('Beatriz Martins', 22, 341, '25-08-1987');
+insert into funcionarios values ('Joana Tavares', 23, 678, '15-08-1990');
+insert into funcionarios values ('Ana Amaro', 24, 786, '20-02-1992');
+insert into funcionarios values ('Eva Marques', 25, 876, '15-04-1990');
+insert into funcionarios values ('Eliza Fonseca', 26, 345, '16-02-1989');
+insert into funcionarios values ('Margarida Cruz', 27, 453, '30-12-1991');
+insert into funcionarios values ('Matilde Santana', 28, 534, '14-08-1983');
+insert into funcionarios values ('Jessica Andrade', 29, 871, '09-09-1993');
+insert into funcionarios values ('Inês Almeida', 30, 718, '10-02-1991');
+insert into funcionarios values ('Sofia Paulino', 31, 921, '21-02-1995');
+insert into funcionarios values ('Bruna Cosme', 32, 219, '01-09-1989');
+insert into funcionarios values ('Daniela Bação', 33, 191, '23-02-1994');
+insert into funcionarios values ('Dora Faria', 34, 335, '10-04-1992');
+insert into hospedeiras values (20, 155, 45, 10);
+insert into hospedeiras values (21, 158, 49, 6);
+insert into hospedeiras values (22, 159, 49, 7);
+insert into hospedeiras values (23, 165, 55, 4);
+insert into hospedeiras values (24, 156, 47, 3);
+insert into hospedeiras values (25, 163, 53, 5);
+insert into hospedeiras values (26, 169, 58, 5);
+insert into hospedeiras values (27, 167, 56, 4);
+insert into hospedeiras values (28, 160, 50, 11);
+insert into hospedeiras values (29, 165, 54, 3);
+insert into hospedeiras values (30, 164, 52, 5);
+insert into hospedeiras values (31, 170, 61, 1);
+insert into hospedeiras values (32, 171, 62, 5);
+insert into hospedeiras values (33, 172, 61, 2);
+insert into hospedeiras values (34, 168, 57, 4);
+
+--COMISSARIOS--
+--(d)--
+insert into funcionarios values ('Rui Martinho', 40, 100, '23-12-1990');
+insert into funcionarios values ('Rúben Guedes', 41, 402, '10-07-1988');
+insert into funcionarios values ('Eduardo Teixeira', 42, 980, '01-02-1992');
+insert into funcionarios values ('Diogo Silva', 43, 779, '03-05-1993' );
+insert into funcionarios values ('Pedro Jordão', 44, 626, '13-11-1991');
+insert into funcionarios values ('Nuno Coelho', 45, 803, '28-03-1983');
+insert into funcionarios values ('André Vales', 46, 771, '17-09-1985');
+insert into funcionarios values ('Rafael Caeiro', 47, 909, '07-07-1994');
+insert into funcionarios values ('Pedro Silva', 48, 554, '02-01-1991');
+insert into funcionarios values ('Bruno Pedrosa', 49, 678, '21-01-1990');
+insert into comissarios_de_bordo values (40,186, 80, 5);
+insert into comissarios_de_bordo values (41, 188, 82, 5);
+insert into comissarios_de_bordo values (42, 190, 82, 4);
+insert into comissarios_de_bordo values (43, 189, 80, 3);
+insert into comissarios_de_bordo values (44, 186, 79, 4);
+insert into comissarios_de_bordo values (45, 191, 80, 11);
+insert into comissarios_de_bordo values (46, 183, 74, 9);
+insert into comissarios_de_bordo values (47, 180, 73, 2);
+insert into comissarios_de_bordo values (48, 175, 70, 5);
+insert into comissarios_de_bordo values (49, 176, 73, 7);
+
+--VOOS--
+--(a)--
+insert into voos values (122, 'Sábado', '10:00', '13:00', 'Lisboa', 'Nova Iorque', 9000);
+insert into requisitosP values (122, 1, 9, 'Sábado');
+insert into requisitosP values (122, 1, 5, 'Sábado');
+insert into requisitosH values (122, 2, 50, 'Sábado');
+insert into requisitosH values (122, 2, 70, 'Sábado');
+insert into requisitosC values (122, 1, 180, 'Sábado');
+insert into requisitosC values (122, 1, 165, 'Sábado');
+
+--(b)--
+insert into voos values (124, 'Sábado', '18:00', '23:30', 'Nova Iorque', 'Lisboa', 9000);
+insert into requisitosP values (124, 1, 9, 'Sábado');
+insert into requisitosP values (124, 1, 5, 'Sábado');
+insert into requisitosH values (124, 1, 50, 'Sábado');
+insert into requisitosH values (124, 2, 70, 'Sábado');
+insert into requisitosC values (124, 2, 165, 'Sábado');
+
+--(c)--
+insert into voos values (125, 'Domingo', '08:30', '11:00', 'Lisboa', 'Madrid', 2000);
+insert into requisitosP values (125, 1, 5, 'Domingo');
+insert into requisitosH values (125, 2, 70, 'Domingo');
+insert into requisitosC values (125, 1, 165, 'Domingo');
+
+--(d)--
+insert into voos values (126, 'Domingo', '14:00', '15:00', 'Madrid', 'Lisboa', 2000);
+insert into requisitosP values (126, 1, 5, 'Domingo');
+insert into requisitosH values (126, 2, 70, 'Domingo');
+insert into requisitosC values (126, 1, 165, 'Domingo');
+
+--(e)--
+insert into voos values (127, 'Segunda', '08:00', '11:00', 'Lisboa', 'Paris', 3500);
+insert into requisitosP values (127, 2, 5, 'Segunda');
+insert into requisitosH values (127, 4, 70, 'Segunda');
+insert into requisitosC values (127, 1, 165, 'Segunda');
+
+--(f)--
+insert into voos values (130, 'Segunda', '12:00', '13:00', 'Paris', 'Bruxelas', 800);
+insert into requisitosP values (130, 1, 5, 'Segunda');
+insert into requisitosH values (130, 2, 70, 'Segunda');
+
+--(g)--
+insert into voos values (131, 'Segunda', '14:00', '15:00', 'Bruxelas', 'Paris', 800);
+insert into requisitosP values (131, 1, 5, 'Segunda');
+insert into requisitosH values (131, 2, 70, 'Segunda');
+
+--(h)--
+insert into voos values (128, 'Segunda', '18:00', '22:00', 'Paris', 'Lisboa', 3500);
+insert into requisitosP values (128, 2, 5, 'Segunda');
+insert into requisitosH values (128, 4, 70, 'Segunda');
+insert into requisitosC values (128, 1, 165, 'Segunda');
+
+
+--TRAJETOS--
+--(a)--
+
+insert into VoosEfectivos values ('Francisco Zeimoto',127,'03-01-2011', 'Segunda','08:05', '10:50', 310);
+insert into VoosEfectivos values ('Francisco Zeimoto',128,'03-01-2011', 'Segunda','18:05', '21:50', 304);
+insert into VoosEfectivos values ('Francisco Zeimoto',130, '03-01-2011', 'Segunda','12:05', '12:50', 250);
+insert into VoosEfectivos values ('Francisco Zeimoto',131, '03-01-2011', 'Segunda','14:05', '14:50',390);
+insert into trajeto values (127, 1, 'Segunda', '03-01-2011');
+insert into trajeto values (128, 1, 'Segunda', '03-01-2011');
+insert into trajeto values (130, 1, 'Segunda', '03-01-2011');
+insert into trajeto values (131, 1, 'Segunda', '03-01-2011');
+
+insert into tripulação values (127, 10,'Segunda','03-01-2011');
+insert into tripulação values (127, 14,'Segunda','03-01-2011');
+insert into tripulação values (127, 20, 'Segunda','03-01-2011');
+insert into tripulação values (127, 25, 'Segunda','03-01-2011');
+insert into tripulação values (127, 30, 'Segunda','03-01-2011');
+insert into tripulação values (127, 31, 'Segunda','03-01-2011');
+insert into tripulação values (127, 40, 'Segunda','03-01-2011');
+
+insert into tripulação values (128, 10,'Segunda','03-01-2011');
+insert into tripulação values (128, 14,'Segunda','03-01-2011');
+insert into tripulação values (128, 20, 'Segunda','03-01-2011');
+insert into tripulação values (128, 25, 'Segunda','03-01-2011');
+insert into tripulação values (128, 30, 'Segunda','03-01-2011');
+insert into tripulação values (128, 31, 'Segunda','03-01-2011');
+insert into tripulação values (128, 40, 'Segunda','03-01-2011');
+
+insert into tripulação values (130, 10,'Segunda','03-01-2011');
+insert into tripulação values (130, 14,'Segunda','03-01-2011');
+insert into tripulação values (130, 20, 'Segunda','03-01-2011');
+insert into tripulação values (130, 25, 'Segunda','03-01-2011');
+insert into tripulação values (130, 30, 'Segunda','03-01-2011');
+insert into tripulação values (130, 31, 'Segunda','03-01-2011');
+insert into tripulação values (130, 40, 'Segunda','03-01-2011');
+
+insert into tripulação values (131, 10,'Segunda','03-01-2011');
+insert into tripulação values (131, 14,'Segunda','03-01-2011');
+insert into tripulação values (131, 20, 'Segunda','03-01-2011');
+insert into tripulação values (131, 25, 'Segunda','03-01-2011');
+insert into tripulação values (131, 30, 'Segunda','03-01-2011');
+insert into tripulação values (131, 31, 'Segunda','03-01-2011');
+insert into tripulação values (131, 40, 'Segunda','03-01-2011');
+
+--(b)--
+insert into VoosEfectivos values ('Nicolau Coelho', 122, '01-01-2011', 'Sábado', '10:00', '13:00', 320);
+insert into VoosEfectivos values ('Nicolau Coelho', 124, '01-01-2011', 'Sábado', '18:00', '23:30', 290);
+insert into trajeto values (122, 2, 'Sábado', '01-01-2011');
+insert into trajeto values (124, 2, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 11, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 12, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 21, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 22, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 33, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 34, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 48, 'Sábado', '01-01-2011');
+insert into tripulação values (122, 49, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 11, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 12, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 21, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 22, 'Sábado','01-01-2011');
+insert into tripulação values (124, 33, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 34, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 48, 'Sábado', '01-01-2011');
+insert into tripulação values (124, 49, 'Sábado', '01-01-2011');
+
+--(c)--
+insert into VoosEfectivos values ('Nicolau Coelho', 122, '08-01-2011', 'Sábado', '10:00', '13:00', 320);
+insert into VoosEfectivos values ('Nicolau Coelho', 124, '08-01-2011', 'Sábado', '18:00', '23:30', 290);
+insert into trajeto values (122, 3, 'Sábado', '08-01-2011');
+insert into trajeto values (124, 3, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 11, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 12, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 21, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 22, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 33, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 34, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 48, 'Sábado', '08-01-2011');
+insert into tripulação values (122, 49, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 11, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 12, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 21, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 22, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 33, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 34, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 48, 'Sábado', '08-01-2011');
+insert into tripulação values (124, 49, 'Sábado', '08-01-2011');
+
+--(d)--
+insert into VoosEfectivos values ('Francisco Zeimoto',127,'10-01-2011', 'Segunda','08:00', '11:00', 310);
+insert into VoosEfectivos values ('Francisco Zeimoto',128,'10-01-2011', 'Segunda','18:00', '22:00', 304);
+insert into VoosEfectivos values ('Francisco Zeimoto',130, '10-01-2011', 'Segunda','12:00', '13:00', 250);
+insert into VoosEfectivos values ('Francisco Zeimoto',131, '10-01-2011', 'Segunda','14:00', '15:00',390);
+insert into trajeto values (127, 4, 'Segunda', '10-01-2011');
+insert into trajeto values (128, 4, 'Segunda', '10-01-2011');
+insert into trajeto values (130, 4, 'Segunda', '10-01-2011');
+insert into trajeto values (131, 4, 'Segunda', '10-01-2011');
+
+insert into tripulação values (127, 10,'Segunda','10-01-2011');
+insert into tripulação values (127, 13,'Segunda','10-01-2011');
+insert into tripulação values (127, 20, 'Segunda','10-01-2011');
+insert into tripulação values (127, 25, 'Segunda','10-01-2011');
+insert into tripulação values (127, 30, 'Segunda','10-01-2011');
+insert into tripulação values (127, 31, 'Segunda','10-01-2011');
+insert into tripulação values (127, 40, 'Segunda','10-01-2011');
+
+insert into tripulação values (128, 10,'Segunda','10-01-2011');
+insert into tripulação values (128, 13,'Segunda','10-01-2011');
+insert into tripulação values (128, 20, 'Segunda','10-01-2011');
+insert into tripulação values (128, 25, 'Segunda','10-01-2011');
+insert into tripulação values (128, 30, 'Segunda','10-01-2011');
+insert into tripulação values (128, 31, 'Segunda','10-01-2011');
+insert into tripulação values (128, 40, 'Segunda','10-01-2011');
+
+insert into tripulação values (130, 10,'Segunda','10-01-2011');
+insert into tripulação values (130, 13,'Segunda','10-01-2011');
+insert into tripulação values (130, 20, 'Segunda','10-01-2011');
+insert into tripulação values (130, 25, 'Segunda','10-01-2011');
+insert into tripulação values (130, 30, 'Segunda','10-01-2011');
+insert into tripulação values (130, 31, 'Segunda','10-01-2011');
+insert into tripulação values (130, 40, 'Segunda','10-01-2011');
+
+insert into tripulação values (131, 10,'Segunda','10-01-2011');
+insert into tripulação values (131, 13,'Segunda','10-01-2011');
+insert into tripulação values (131, 20, 'Segunda','10-01-2011');
+insert into tripulação values (131, 25, 'Segunda','10-01-2011');
+insert into tripulação values (131, 30, 'Segunda','10-01-2011');
+insert into tripulação values (131, 31, 'Segunda','10-01-2011');
+insert into tripulação values (131, 40, 'Segunda','10-01-2011');
+
+
+--Mais informações--
+insert into avioes values('Paulo Dybala', 'Boeing', 750, 2500, 300 );
+insert into avioes values('Eden Hazard', 'Boeing', 750, 2500, 300 );
+insert into avioes values('Gonzalo Higuain', 'Boeing', 750, 2500, 300 );
+insert into avioes values('Paul Pogba','Airbus', 'A450', 3000, 700);
+insert into avioes values('Antoine Griezmann','Airbus', 'A450', 3000, 700);
+
+insert into funcionarios values ('Jorge Paulo Lemann', 50, 1000,'19-04-1952');
+insert into funcionarios values ('Tim Cook', 51, 1001,'30-09-1972');
+insert into funcionarios values ('David Koch', 52, 1002,'10-08-1959');
+insert into funcionarios values ('Charles Koch', 53, 1003,'19-01-1972');
+insert into funcionarios values ('Mellody Hobson', 54, 1004,'18-03-1990');
+insert into funcionarios values ('Susan Wojcicki', 55, 1005,'22-05-1957');
+insert into funcionarios values ('Tony Fernandes', 56, 1006,'19-07-1982');
+insert into funcionarios values ('Reid Hoffman', 57, 1007,'21-04-1955');
+insert into administrativos values (50);
+insert into administrativos values (51);
+insert into pilotos values(52,11, 12);
+insert into pilotos values(53,12, 15);
+insert into hospedeiras values (54, 180, 80, 15);
+insert into hospedeiras values (55, 166, 75, 4);
+insert into comissarios_de_bordo values (56, 186, 83, 10);
+insert into comissarios_de_bordo values (57, 163, 65, 15);
+insert into voos values (180, 'Quarta', '13:00', '18:00', 'Marrocos', 'Veneza', 11000);
+insert into voos values (190, 'Quinta', '20:00', '21:00', 'Porto', 'Lisboa', 600);
+
+insert into VoosEfectivos values ('Paulo Dybala',180,'05-02-2011', 'Quarta','13:05', '18:50', 100);
+
+
+select NumVoo, Origem, Destino, horapartida
+from voos
+where DiaSemana='Domingo'
+
+select distinct NumVoo
+from VoosEfectivos
+where NomeA='Nicolau Coelho'

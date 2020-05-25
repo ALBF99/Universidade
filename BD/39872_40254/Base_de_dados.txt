@@ -1,0 +1,163 @@
+Ana Ferro-39872
+David Tintim-40254
+
+
+create table especie(
+  NomeE varchar(25) primary key ,
+  Classe varchar(20)
+);
+
+create table animal(
+  NomeA varchar(25) primary key,
+  Genero varchar(10),
+  NomeE varchar(25),
+  foreign key (NomeE) references especie on delete restrict
+);
+
+create table compartimento(
+  IdComp integer  primary key,
+  Tipo varchar(20)
+);
+
+create table tratador(
+  NCC char(8) primary key ,
+  NomeT varchar(25),
+  Salário integer,
+  NCCChefe char(8)
+);
+
+create table alojado(
+  NomeA varchar(25),
+  IdComp integer,
+  primary key(NomeA, IdComp),
+  foreign key (NomeA) references animal on delete restrict,
+  foreign key (IdComp) references compartimento on delete restrict
+);
+
+create table trata(
+  IdComp integer,
+  NCC char(8),
+  primary key(IdComp, NCC),
+  foreign key (IdComp) references compartimento on delete restrict ,
+  foreign key (NCC) references tratador on delete restrict
+);
+
+insert into especie values('Foca', 'Mamífero');
+insert into animal values ('Kiki', 'feminino', 'Foca');
+insert into compartimento values ('23', 'charco');
+insert into alojado values ('Kiki', 23);
+
+insert into animal values ('Lola', 'feminino', 'Foca');
+insert into alojado values ('Lola', 23);
+
+insert into especie values ('Leão Marinho', 'Mamífero');
+insert into animal values ('Anibal', 'masculino', 'Leão Marinho');
+insert into alojado values ('Anibal', 23);
+
+insert into especie values ('Lontra', 'Mamífero');
+insert into animal values ('Amalia', 'feminino', 'Lontra');
+insert into alojado values ('Amalia', 23);
+
+insert into animal values ('Eusebio', 'masculino', 'Lontra');
+insert into alojado values ('Eusebio', 23);
+
+insert into tratador values ('123', 'Manuel', 750, null);
+insert into trata values (23, '123');
+insert into compartimento values (10, null);
+insert into trata values (10, '123');
+
+insert into tratador values ('124', 'Luís', 850, null);
+update tratador set NCCChefe='124' where NCC='123';
+insert into trata values (23, '124');
+insert into trata values (10, '124');
+
+insert into especie values ('Tigre', 'Mamífero');
+insert into animal values ('Jau', 'masculino', 'Tigre');
+update compartimento set Tipo='selva' where IdComp=10;
+insert into alojado values ('Jau', 10);
+
+insert into animal values ('Princesa', 'feminino', 'Tigre');
+insert into alojado values ('Princesa', 10);
+
+insert into especie values ('Tartaruga', 'Reptil');
+insert into animal values ('Huga', 'feminino', 'Tartaruga');
+insert into compartimento values (8, 'pantano');
+insert into alojado values ('Huga', 8);
+
+insert into animal values ('Luna', 'feminino', 'Tartaruga');
+insert into alojado values ('Luna', 8);
+
+insert into especie values ('Lagartixa', 'Reptil');
+insert into animal values ('Brava', 'feminino', 'Lagartixa');
+insert into alojado values ('Brava', 8);
+
+insert into especie values ('Lagarto', 'Reptil');
+insert into animal values ('Raul','masculino','Lagarto');
+insert into alojado values ('Raul', 8);
+
+insert into tratador values ('125', 'Maria', 850, '124');
+insert into trata values (8, '125');
+insert into compartimento values (15, null);
+insert into trata values (15, '125');
+
+insert into especie values ('Papagaio', 'Ave');
+insert into animal values ('Pirata', 'masculino', 'Papagaio');
+update compartimento set Tipo='gaiola' where IdComp=15;
+insert into alojado values ('Pirata', 15);
+
+insert into animal values ('Bela', 'feminino', 'Papagaio');
+insert into alojado values ('Bela', 15);
+
+insert into especie values ('Arara', 'Ave');
+insert into animal values ('Joia', 'feminino', 'Arara');
+insert into alojado values ('Joia', 15);
+
+
+insert into especie values('Camelo', 'Mamífero');
+insert into especie values ('Urso', 'Mamífero');
+insert into especie values('Raposa', 'Mamífero');
+insert into especie values ('Polvo', 'Cefalópode');
+insert into especie values ('Leoa', 'Mamífero');
+insert into especie values('Leão', 'Mamífero');
+insert into especie values ('Peixe-palhaço', 'Peixe Ósseo');
+insert into especie values ('Cavalo-marinho', 'Peixe Ósseo');
+insert into animal values ('Apu', 'masculino', 'Camelo');
+insert into animal values ('Mia', 'feminino', 'Camelo');
+insert into animal values ('Balu', 'masculino', 'Urso');
+insert into animal values ('Ted', 'masculino', 'Urso');
+insert into animal values ('Dentuça', 'masculino', 'Raposa');
+insert into animal values ('Nala', 'feminino', 'Leoa');
+insert into animal values ('Simba','masculino', 'Leão');
+insert into animal values ('Nemo', 'masculino', 'Peixe-palhaço');
+insert into animal values ('Melman', 'masculino', 'Peixe-palhaço');
+insert into animal values ('Pérola', 'feminino', 'Polvo');
+insert into animal values ('Sheldon', 'masculino', 'Cavalo-marinho');
+insert into compartimento values (11, 'selva');
+insert into compartimento values (5, 'aquário');
+insert into compartimento values (20, 'bosque');
+insert into compartimento values (3, 'deserto');
+insert into tratador values ('130', 'Rui', 950, null);
+insert into tratador values ('126', 'Ana', 650,'130');
+insert into tratador values ('127', 'João', 850, '130');
+insert into tratador values ('128', 'Inês', 750,'127');
+insert into tratador values ('129', 'Tiago', 750,'127');
+update tratador set NCCChefe='130' where NCC='124';
+insert into alojado values ('Apu', 3);
+insert into alojado values ('Mia', 3);
+insert into alojado values ('Balu', 20);
+insert into alojado values ('Ted', 20);
+insert into alojado values ('Dentuça', 20);
+insert into alojado values ('Nala', 11);
+insert into alojado values ('Simba', 11);
+insert into alojado values ('Nemo', 5);
+insert into alojado values ('Melman', 5);
+insert into alojado values ('Pérola', 5);
+insert into alojado values ('Sheldon', 5);
+insert into trata values (5, '126');
+insert into trata values (11, '127');
+insert into trata values (3, '127');
+insert into trata values (11, '128');
+insert into trata values (20, '129');
+insert into trata values (3, '130');
+insert into trata values (11, '130');
+insert into trata values (20, '130');
