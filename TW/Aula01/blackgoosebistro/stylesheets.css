@@ -1,0 +1,74 @@
+html{
+    font-family: Verdana, sans-serif;
+}
+
+body{
+    font-family: Georgia, serif;
+    font-size:small;
+    line-height: 1.75em;
+}
+
+h1{
+    font:150%'Marko One';
+    color: purple;
+    text-shadow: .1em .1em .2em lightgray;
+}
+
+h2{
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    color:purple;
+}
+  
+p, dl{
+    font-size: 0.9375em;
+}
+
+dt{
+    font-style: bold;
+    color: sienna;
+}
+
+dt strong{
+    color: maroon;
+}
+
+strong{
+    font-style: italic;
+}
+
+
+#info{
+    color:grey;
+}
+
+#info p{
+    font-style: italic;
+}
+
+.price{
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: grey;
+}
+
+.label{
+    font-family: Bold;
+    font-style: normal;
+    font-variant: small-caps;
+}
+
+.warning{
+    font-size: x-small;
+    color: red;
+}
+
+h1, h2, #info{
+    text-align: center;
+}
+
+.special_p{
+    text-align: center;
+    font-style: italic;
+}
